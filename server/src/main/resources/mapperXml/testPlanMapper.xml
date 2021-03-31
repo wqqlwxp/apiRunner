@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.runner.server.dao.mapper.TestPlanMapper">
+    <select id="queryAll" resultType="com.runner.server.dao.entity.po.TestPlan">
+        select * from test_plan
+    </select>
+
+
+    <select id="queryAllCount" resultType="int">
+        select count(*) from test_plan
+    </select>
+
+
+    <select id="queryByCode" resultType="com.runner.server.dao.entity.po.TestPlan">
+        select * from test_plan
+        <where >
+            1=1
+            <if test="projectCode!=null and projectCode!=''">
+                and project_code=#{projectCode}
+            </if>
+            <if test="moduleCode!=null and moduleCode!=''">
+                and module_code=#{moduleCode}
+            </if>
+        </where>
+    </select>
+
+
+
+
+
+
+    <select id="queryCountByExample" resultType="int" >
+        select count(t.id) from test_plan t
+        LEFT JOIN  project p on p.project_code=t.project_code
+        LEFT JOIN  project_module m on m.module_code=t.module_code   and m.project_code=t.project_code
+        <where>
+            1=1
+            <if test="testPlan !=null ">
+                <if test="testPlan.projectName !=null and testPlan.projectName !=''">
+                    and p.project_name=#{testPlan.projectName}
+                </if>
+            </if>
+        </where>
+    </select>
+
+
+
+
+
+
+    <select id="queryPageData" resultType="com.runner.server.dao.entity.po.TestPlan" >
+        select t.id,t.project_code,p.project_name,t.module_code,m.module_name,t.service_type,t.env_code,t.plan_desc,t.`status`,t.create_time,t.operater from test_plan t
+        LEFT JOIN  project p on p.project_code=t.project_code
+        LEFT JOIN  project_module m on m.module_code=t.module_code   and m.project_code=t.project_code
+         <where>
+             1=1
+             <if test="testPlan !=null ">
+                 <if test="testPlan.projectName !=null and testPlan.projectName !=''">
+                    and p.project_name=#{testPlan.projectName}
+                 </if>
+                 <if test="testPlan.moduleName !=null and testPlan.moduleName !=''">
+                     and m.module_name=#{testPlan.moduleName}
+                 </if>
+                 <if test="testPlan.projectCode !=null and testPlan.projectCode !=''">
+                     and t.project_code=#{testPlan.projectCode}
+                 </if>
+                 <if test="testPlan.moduleCode !=null and testPlan.moduleCode !=''">
+                     and t.module_code=#{testPlan.moduleCode}
+                 </if>
+                 <if test="testPlan.status !=null and testPlan.status !=''">
+                     and t.status=#{testPlan.status}
+                 </if>
+                 <if test="testPlan.serviceType !=null and testPlan.serviceType !=''">
+                     and t.service_type=#{testPlan.serviceType}
+                 </if>
+             </if>
+
+         </where>
+         order by id desc limit #{offset},#{size}
+    </select>
+
+
+
+</mapper>

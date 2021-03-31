@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"  xmlns:th="http://www.thymeleaf.org">
+    <link rel="stylesheet" type="text/css"  th:href="@{http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css}" ></link>
+
+
+<style type="text/css">
+    .table {
+        display: table;
+        width: 100%;
+        width: calc(100% - 30px);
+        margin: auto;
+        table-layout: fixed;
+        text-align: left;
+    }
+    .td {
+        display: table-cell;
+        padding: 5px;
+    }
+
+    input[type="checkbox"] {
+        position: absolute;
+        clip: rect(0 0 0 0);
+    }
+
+
+
+    :checked ~ .check-out {
+        display: inline-block;
+    }
+    :checked ~ .check-in {
+        display: none;
+    }
+
+    .element {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height .5s;
+    }
+
+    :checked ~ .element {
+        max-height: 666px;
+    }
+
+    tr{
+        height: 30px;
+    }
+</style>
+
+<body>
+
+
+<div class="container">
+         <div >
+                <h1   th:text="${subject}" class="text-primary" style="font-size:35px;line-height:55px;text-align: center;"></h1>
+         </div>
+        
+
+         <div style="margin-left: 10%;">
+                <div style="width:48%;float: left" >
+                    <table border="1" bordercolor="#E0EEE0" width="60%" cellspacing="0" cellpadding="5">
+                        <tr>
+                            <td>开始时间</td>
+                            <td th:text="${start_time}"></td>
+                        </tr>
+                        <tr>
+                            <td>结束时间</td>
+                            <td th:text="${end_time}"></td>
+                        </tr>
+                        <tr>
+                            <td>执行耗时</td>
+                            <td th:text="${used_time}"></td>
+                        </tr>
+                        <tr>
+                            <td>执行用例数</td>
+                            <td th:text="${sum_all_cases}"></td>
+                        </tr>
+                        <tr>
+                            <td>执行成功数</td>
+                            <td th:text="${sum_success_cases}" style="color: green"></td>
+                        </tr>
+                        <tr>
+                            <td>执行成功率</td>
+                            <td th:text="${sum_success_rate}"></td>
+                        </tr>
+                        <tr>
+                            <td>执行失败数</td>
+                            <td th:text="${sum_failed_cases}" style="color: red"></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div style="float:left" >
+                    <img   th:attr="src='cid:'+${imgPathId}" ></img>
+                </div>
+
+        </div>
+
+        <div style="margin-left: 10%;margin-top: 60px">
+            <table border="1" bordercolor="#E0EEE0" width="1000" cellspacing="0" cellpadding="5" style="table-layout: fixed;">
+                <thead>
+                    <th style="width: 80px">测试项目</th>
+                    <th style="width: 80px">测试模块</th>
+                    <th style="width: 80px">测试环境</th>
+                    <th style="width: 30px">用例id</th>
+                    <th style="width: 200px">用例描述</th>
+                    <th style="width: 200px">执行接口描述</th>
+                    <th style="width: 50px">用例类型</th>
+                    <th style="width: 50px">调用类型</th>
+                    <th style="width: 50px">测试结果</th>
+                </thead>
+                <tbody>
+                    <tr  th:each="summary : ${dataList}"  >
+                        <td th:text="${summary.projectName}" style="width: 80px"></td>
+                        <td th:text="${summary.moduleName}" style="width: 80px"></td>
+                        <td th:text="${summary.testEnv}" style="width: 80px"></td>
+                        <td th:text="${summary.caseId}"  style="width: 30px"></td>
+                        <td th:text="${summary.caseDesc}" style="width: 200px"></td>
+                        <td th:text="${summary.interfaceDesc}" style="width: 200px"></td>
+                        <td  th:if="${summary.type eq '1'}"  style="width: 50px" >正常用例</td>
+                        <td  th:if="${summary.type eq '0'}"  style="width: 50px">前置用例</td>
+                        <td th:text="${summary.serviceType}" style="width: 100px"></td>
+                        <td  th:if="${summary.result eq 'true'}"  style="color:green;width:50px" >成功</td>
+                        <td  th:if="${summary.result eq 'false'}"  style="color:red;width: 50px">失败</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+
+
+
+
+</html>

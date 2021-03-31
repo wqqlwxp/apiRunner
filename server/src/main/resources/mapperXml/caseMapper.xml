@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.runner.server.dao.mapper.CaseMapper">
+    <select id="queryAll" resultType="com.runner.server.dao.entity.po.TestCase">
+        select * from test_case
+    </select>
+
+
+    <select id="queryAllCount" resultType="int">
+        select count(id) from test_case
+    </select>
+
+
+    <select id="queryByCode" resultType="int">
+        select count(id) from test_case
+        <where >
+            1=1
+            <if test="projectCode!=null and projectCode!=''">
+                and project_code=#{projectCode}
+            </if>
+            <if test="moduleCode!=null and moduleCode!=''">
+                and module_code=#{moduleCode}
+            </if>
+            <if test="env!=null and env!=''">
+                and env_code=#{env}
+            </if>
+        </where>
+    </select>
+
+
+
+
+
+    <select id="queryCountByExample" resultType="int" >
+        select count(cas.id) from test_case cas
+        LEFT JOIN  project p on p.project_code=cas.project_code
+        LEFT JOIN  project_module m on m.module_code=cas.module_code and m.project_code=cas.project_code
+        <where>
+            1=1
+            <if test="testCase !=null ">
+                <if test="testCase.projectName !=null and testCase.projectName !=''">
+                    and p.project_name=#{testCase.projectName}
+                </if>
+                <if test="testCase.moduleName !=null and testCase.moduleName !=''">
+                    and m.module_name=#{testCase.moduleName}
+                </if>
+                <if test="testCase.projectCode !=null and testCase.projectCode !=''">
+                    and cas.project_code=#{testCase.projectCode}
+                </if>
+                <if test="testCase.moduleCode !=null and testCase.moduleCode !=''">
+                    and cas.module_code = #{testCase.moduleCode}
+                </if>
+                <if test="testCase.id !=null and testCase.id !=''">
+                    and cas.id=#{testCase.id}
+                </if>
+                <if test="testCase.serviceType !=null and testCase.serviceType !=''">
+                    and cas.service_type=#{testCase.serviceType}
+                </if>
+            </if>
+        </where>
+
+    </select>
+
+
+
+    <select id="queryPageData" resultType="com.runner.server.dao.entity.po.TestCase" >
+        select cas.id,cas.service_type,cas.project_code,cas.module_code,cas.type,cas.interface_ids,cas.env_code,cas.case_desc,cas.`status`,cas.create_time,p.project_name,m.module_name,cas.operater
+        from test_case cas
+        LEFT JOIN  project p on p.project_code=cas.project_code
+        LEFT JOIN  project_module m on m.module_code=cas.module_code and m.project_code=cas.project_code
+        <where>
+             1=1
+             <if test="testCase !=null ">
+                 <if test="testCase.projectName !=null and testCase.projectName !=''">
+                    and p.project_name=#{testCase.projectName}
+                 </if>
+                 <if test="testCase.moduleName !=null and testCase.moduleName !=''">
+                     and m.module_name=#{testCase.moduleName}
+                 </if>
+                 <if test="testCase.projectCode !=null and testCase.projectCode !=''">
+                     and cas.project_code=#{testCase.projectCode}
+                 </if>
+                 <if test="testCase.moduleCode !=null and testCase.moduleCode !=''">
+                     and cas.module_code = #{testCase.moduleCode}
+                 </if>
+                 <if test="testCase.type !=null and testCase.type !=''">
+                     and cas.type=#{testCase.type}
+                 </if>
+                 <if test="testCase.status !=null and testCase.status !=''">
+                     and cas.status=#{testCase.status}
+                 </if>
+                 <if test="testCase.id !=null and testCase.id !=''">
+                     and cas.id=#{testCase.id}
+                 </if>
+                 <if test="testCase.serviceType !=null and testCase.serviceType !=''">
+                     and cas.service_type=#{testCase.serviceType}
+                 </if>
+             </if>
+            <if test="modules!=null">
+                and cas.module_code in
+                <foreach collection="modules" item="module" index="index" open="(" close=")" separator=",">
+                    #{module}
+                </foreach>
+            </if>
+
+         </where>
+         order by id desc limit #{offset},#{size}
+    </select>
+
+
+    <select id="querySingleCase" resultType="com.runner.server.dao.entity.po.TestCase">
+        select * from test_case where id=#{id}
+    </select>
+
+
+</mapper>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.runner.server.dao.mapper.ZkMapper">
+    <select id="queryAll" resultType="com.runner.server.dao.entity.po.ZkConfig">
+        select * from zk_config
+    </select>
+
+
+    <select id="queryAllCount" resultType="int">
+        select count(*) from zk_config
+    </select>
+
+
+    <select id="queryCountByExample" resultType="int" >
+        select count(*) from zk_config
+        <where>
+            1=1
+            <if test="zkConfig !=null ">
+                <if test="zkConfig.zkAlias !=null and zkConfig.zkAlias!=''">
+                    and zk_alias=#{zkConfig.zkAlias}
+                </if>
+            </if>
+        </where>
+    </select>
+
+
+
+
+    <select id="queryPageData" resultType="com.runner.server.dao.entity.po.ZkConfig" >
+        select * from zk_config
+        <where>
+            1=1
+            <if test="zkConfig !=null ">
+                <if test="zkConfig.zkAlias !=null and zkConfig.zkAlias!=''">
+                    and zk_alias=#{zkConfig.zkAlias}
+                </if>
+            </if>
+        </where>
+        order by id desc limit #{offset},#{size}
+    </select>
+
+
+
+</mapper>

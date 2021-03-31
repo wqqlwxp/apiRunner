@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.runner.server.dao.mapper.ReportMapper">
+
+
+    <select id="queryAll" resultType="com.runner.server.dao.entity.po.CaseLog" >
+        select * from case_log
+    </select>
+
+    <select id="queryAllCount" resultType="int">
+        select count(*) from case_log
+    </select>
+
+
+
+
+    <select id="queryCountByExample" resultType="int">
+        select count(cl.id) from case_log  cl
+        LEFT JOIN project p on p.project_code=cl.project_code
+        left JOIN project_module m on m.module_code=cl.module_code   and m.project_code=cl.project_code
+        <where>
+            1=1
+            <if test="caseLog !=null ">
+                <if test="caseLog.projectName !=null and caseLog.projectName !=''">
+                    and p.project_name=#{caseLog.projectName}
+                </if>
+                <if test="caseLog.moduleName !=null and caseLog.moduleName !=''">
+                    and m.module_name=#{caseLog.moduleName}
+                </if>
+                <if test="caseLog.caseId !=null and caseLog.caseId !=''">
+                    and cl.case_id=#{caseLog.caseId}
+                </if>
+            </if>
+        </where>
+    </select>
+
+
+    <select id="queryPageData" resultType="com.runner.server.dao.entity.po.CaseLog" >
+        select cl.id,cl.project_code,p.project_name,cl.module_code,m.module_name,cl.type,cl.service_type,cl.case_id,cl.interface_desc,
+        cl.plan_id,cl.test_env,cl.response_data,cl.verif_data,cl.result,cl.msg,cl.create_time from case_log  cl
+        LEFT JOIN project p on p.project_code=cl.project_code
+        left JOIN project_module m on m.module_code=cl.module_code   and m.project_code=cl.project_code
+        <where>
+             1=1
+             <if test="caseLog !=null ">
+                 <if test="caseLog.projectName !=null and caseLog.projectName !=''">
+                    and p.project_name=#{caseLog.projectName}
+                 </if>
+                 <if test="caseLog.moduleName !=null and caseLog.moduleName !=''">
+                     and m.module_name=#{caseLog.moduleName}
+                 </if>
+                 <if test="caseLog.caseId !=null and caseLog.caseId !=''">
+                     and cl.case_id=#{caseLog.caseId}
+                 </if>
+             </if>
+         </where>
+         order by id desc limit #{offset},#{size}
+    </select>
+
+
+    <select id="queryProjectSummary" resultType="com.runner.server.dao.entity.bo.ReportSummary" >
+        select DATE_FORMAT(cl.create_time,"%Y-%m-%d") create_time,cl.project_code,p.project_name,cl.module_code,m.module_name,count(cl.id) summary,
+            count(case when cl.result='true' then 1 end) as success,
+            count(case when cl.result='false' then 2 end) as fail
+        from case_log   cl
+        LEFT JOIN project p on p.project_code=cl.project_code
+        LEFT JOIN project_module  m on m.module_code=cl.module_code and m.project_code=cl.project_code
+            where DATE_SUB(CURDATE(), INTERVAL 14 DAY) <![CDATA[ <= ]]> cl.create_time
+                GROUP BY DATE_FORMAT(cl.create_time,"%Y-%m-%d"),cl.project_code
+    </select>
+
+
+    <select id="queryModuleSummary" resultType="com.runner.server.dao.entity.bo.ReportSummary" >
+        select DATE_FORMAT(cl.create_time,"%Y-%m-%d") create_time,cl.project_code,p.project_name,cl.module_code,m.module_name,count(cl.id) summary,
+            count(case when cl.result='true' then 1 end) as success,
+            count(case when cl.result='false' then 2 end) as fail
+        from case_log   cl
+        LEFT JOIN project p on p.project_code=cl.project_code
+        LEFT JOIN project_module  m on m.module_code=cl.module_code and m.project_code=cl.project_code
+            where DATE_SUB(CURDATE(), INTERVAL 14 DAY) <![CDATA[ <= ]]> cl.create_time
+                GROUP BY DATE_FORMAT(cl.create_time,"%Y-%m-%d"),cl.module_code
+    </select>
+
+</mapper>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.runner.server.dao.mapper.ScheduleTaskMapper">
+    <select id="queryAll" resultType="com.runner.server.dao.entity.po.ScheduleTask">
+        select * from schedule_task
+    </select>
+
+
+    <select id="queryAllCount" resultType="int">
+        select count(*) from schedule_task
+    </select>
+
+
+
+    <select id="queryCountByExample" resultType="int" >
+        select count(task.id) from schedule_task task
+        left join project p on p.project_code=task.project_code
+        <where>
+            1=1
+            <if test="scheduleTask !=null ">
+                <if test="scheduleTask.projectName !=null and scheduleTask.projectName!=''">
+                    and p.project_name=#{scheduleTask.projectName}
+                </if>
+            </if>
+        </where>
+    </select>
+
+
+    <select id="queryPageData" resultType="com.runner.server.dao.entity.po.ScheduleTask" >
+        select task.id,task.project_code,p.project_name,task.cron,task.`status`,task.operater,task.create_time from schedule_task task
+        left join project p on p.project_code=task.project_code
+        <where>
+            1=1
+            <if test="scheduleTask !=null ">
+                <if test="scheduleTask.projectName !=null and scheduleTask.projectName!=''">
+                    and p.project_name=#{scheduleTask.projectName}
+                </if>
+            </if>
+        </where>
+        order by id desc limit #{offset},#{size}
+    </select>
+
+
+
+</mapper>

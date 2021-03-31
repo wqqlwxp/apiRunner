@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.runner.server.dao.mapper.UserMapper">
+    <select id="queryAll" resultType="com.runner.server.dao.entity.po.User">
+        select * from `user`
+    </select>
+
+
+    <select id="queryAllCount" resultType="int">
+        select count(*) from `user`
+    </select>
+
+
+    <select id="queryPageData" resultType="com.runner.server.dao.entity.po.User" >
+        select * from `user`
+         <where>
+             1=1
+             <if test="user !=null ">
+                 <if test="user.userAccount !=null and user.userAccount !=''">
+                    and  user_account=#{user.userAccount}
+                 </if>
+                 <if test="user.userPassword !=null and user.userPassword !=''">
+                     and  user_password=#{user.userPassword}
+                 </if>
+                 <if test="user.status !=null and user.status !=''">
+                     and  status=#{user.status}
+                 </if>
+             </if>
+         </where>
+         order by id desc limit #{offset},#{size}
+    </select>
+
+
+
+</mapper>

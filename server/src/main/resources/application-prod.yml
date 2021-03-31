@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://xxxxxxx:3306/api_runner?autoReconnect=true&useUnicode=true&serverTimezone=UTC
+    username: xxx
+    password: xxxx
+
+
+
+  #邮件报告中大饼图图片存放部署服务器路径
+pic_path: /Users/pic/dabing.png
+
+#maven仓库
+nexus-address: http://xxxxxxxxx:8081/repository/
+
+#jar包远程存放路径,可自定义存放路径
+nexus-target: server/src/main/resources/lib/
+
+#本地是否开启redis和zk代理
+open_ssh: true

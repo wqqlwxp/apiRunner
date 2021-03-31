@@ -1,0 +1,62 @@
+# 主配置文件主要用来存放公共设置，不受环境配置影响
+server:
+  port: 8010 # 指定端口号
+
+
+spring:
+  profiles:
+    active: @profile.active@
+
+  # 邮件发送配置
+  mail:
+    port: 465
+    host: smtp.exmail.qq.com
+    username: xxxx  #测试报告发送邮箱账号
+    password: xxxx        #测试报告发送邮箱密码
+    default-encoding: UTF-8
+    properties:
+      mail:
+        smtp:
+          auth: true
+          socketFactory:
+            port: 465
+            class: javax.net.ssl.SSLSocketFactory
+            allback: false
+          starttls:
+            enable: true
+            required: true
+
+  redis:
+    port: 6379
+    database: 0
+    host: 127.0.0.1      # 不需要代理时配置实际ip
+    password: redis
+    jedis:
+      pool:
+        max-active: 8
+        max-wait: -1ms
+        max-idle: 8
+        min-idle: 0
+    timeout: 5000ms
+
+
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    encoding: UTF-8
+    mode: HTML5
+    cache: false
+    content-type: text/html
+
+
+## Mybatis 配置
+mybatis:
+  mapper-locations: classpath*:mapperXml/*.xml
+  typeAliasesPackage: com.runner.server.dao.entity
+  configuration:
+    map-underscore-to-camel-case: true # 开启驼峰命名规则
+    use-generated-keys: true  # 使用jdbc的getGeneratedKeys 获取数据库自增主键
+    use-column-label: true # 使用列名替换别名 默认为true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+

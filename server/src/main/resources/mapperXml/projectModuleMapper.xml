@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.runner.server.dao.mapper.ProjectModuleMapper">
+
+
+    <select id="queryAllModule" resultType="com.runner.server.dao.entity.po.ProjectModule">
+        select * from project_module
+    </select>
+
+    <select id="queryAllCount" resultType="int">
+        select count(*) from project_module
+    </select>
+
+
+
+
+
+
+    <select id="queryByCode" resultType="int">
+        select * from project_module
+        <where >
+            1=1
+            <if test="projectCode!=null and projectCode!=''">
+                and project_code=#{projectCode}
+            </if>
+            <if test="moduleCode!=null and moduleCode!=''">
+                and module_code=#{moduleCode}
+            </if>
+        </where>
+    </select>
+
+
+
+
+
+    <select id="queryCountByExample" resultType="int" >
+        select count(id) from project_module
+        <where>
+            1=1
+            <if test="projectModule !=null ">
+                <if test="projectModule.projectCode !=null and projectModule.projectCode !=''">
+                    and project_code=#{projectModule.projectCode}
+                </if>
+                <if test="projectModule.moduleCode !=null and projectModule.moduleCode !=''">
+                    and module_code=#{projectModule.moduleCode}
+                </if>
+            </if>
+        </where>
+    </select>
+
+
+
+
+    <select id="queryModulePageData" resultType="com.runner.server.dao.entity.po.ProjectModule" >
+        select * from project_module
+        <where>
+            1=1
+            <if test="projectModule !=null ">
+                <if test="projectModule.projectCode !=null and projectModule.projectCode !=''">
+                    and project_code=#{projectModule.projectCode}
+                </if>
+                <if test="projectModule.moduleCode !=null and projectModule.moduleCode !=''">
+                    and module_code=#{projectModule.moduleCode}
+                </if>
+            </if>
+
+        </where>
+        order by id desc limit #{offset},#{size}
+    </select>
+
+</mapper>

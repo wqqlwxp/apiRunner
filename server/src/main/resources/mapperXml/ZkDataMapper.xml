@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.runner.server.dao.mapper.ZkDataMapper">
+    <select id="queryAll" resultType="com.runner.server.dao.entity.po.ZkData">
+        select * from zk_data
+    </select>
+
+
+    <select id="queryAllCount" resultType="int">
+        select count(*) from zk_data
+    </select>
+
+
+    <select id="queryCountByExample" resultType="int" >
+        select count(*) from zk_data
+        <where>
+            1=1
+            <if test="zkData !=null ">
+                <if test="zkData.appName !=null and zkData.appName!=''">
+                    and app_name=#{zkData.appName}
+                </if>
+                <if test="zkData.interfaceName !=null and zkData.interfaceName!=''">
+                    and interface_name=#{zkData.interfaceName}
+                </if>
+            </if>
+        </where>
+    </select>
+
+
+
+
+    <select id="queryPageData" resultType="com.runner.server.dao.entity.po.ZkData" >
+        select d.id,d.zk_id,d.app_name,d.interface_name,d.method_name,d.version,d.group,d.param_datas,d.param_types,d.create_time,c.zk_alias  from zk_data d
+        left join zk_config c on c.id=d.zk_id
+        <where>
+            1=1
+            <if test="zkData !=null ">
+                <if test="zkData.appName !=null and zkData.appName!=''">
+                    and app_name=#{zkData.appName}
+                </if>
+                <if test="zkData.interfaceName !=null and zkData.interfaceName!=''">
+                    and interface_name=#{zkData.interfaceName}
+                </if>
+                <if test="zkData.zkId !=null and zkData.zkId!=''">
+                    and zk_id=#{zkData.zkId}
+                </if>
+                <if test="zkData.methodName !=null and zkData.methodName!=''">
+                    and method_name=#{zkData.methodName}
+                </if>
+            </if>
+        </where>
+        order by id desc limit #{offset},#{size}
+    </select>
+
+
+    <insert id="insertBatchZkData" parameterType="com.runner.server.dao.entity.po.ZkData">
+        INSERT INTO zk_data(zk_id,app_name, interface_name, method_name,version, create_time,param_types,param_datas,`group` )VALUES
+        <foreach collection="list" item="ZkData" separator=",">
+            (
+            #{ZkData.zkId}, #{ZkData.appName}, #{ZkData.interfaceName},
+            #{ZkData.methodName}, #{ZkData.version}, #{ZkData.createTime}, #{ZkData.paramTypes},#{ZkData.paramDatas},#{ZkData.group}
+            )
+        </foreach>
+    </insert>
+
+
+
+
+
+</mapper>

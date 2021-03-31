@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.runner.server.dao.mapper.CipherMapper">
+    <select id="queryAll" resultType="com.runner.server.dao.entity.po.Cipher">
+        select * from cipher
+    </select>
+
+    <select id="queryAllCount" resultType="int">
+        select count(id) from cipher
+    </select>
+
+
+
+
+    <select id="queryCountByExample" resultType="int" >
+        select count(c.id) from `cipher` c
+        left join project p on p.project_code=c.project_code
+        LEFT join project_module m on m.module_code=c.module_code and m.project_code=c.project_code
+        <where>
+            1=1
+            <if test="cipher !=null ">
+
+                <if test="cipher.projectName !=null and cipher.projectName !=''">
+                    and p.project_name=#{cipher.projectName}
+                </if>
+                <if test="cipher.moduleName !=null and cipher.moduleName !=''">
+                    and m.module_name=#{cipher.moduleName}
+                </if>
+            </if>
+        </where>
+    </select>
+
+
+    <select id="queryPageData" resultType="com.runner.server.dao.entity.po.Cipher" >
+        select c.id,c.project_code,c.module_code,c.type,c.key_data,c.iv,c.cipher_path,c.request_encrypt,c.response_decrypt,c.execute_order,c.operater,c.`status`,c.create_time,p.project_name,m.module_name from `cipher` c
+        left join project p on p.project_code=c.project_code
+        LEFT join project_module m on m.module_code=c.module_code and m.project_code=c.project_code
+
+        <where>
+             1=1
+             <if test="cipher !=null ">
+                 <if test="cipher.projectCode !=null and cipher.projectCode !=''">
+                    and c.project_code=#{cipher.projectCode}
+                 </if>
+                 <if test="cipher.projectName !=null and cipher.projectName !=''">
+                     and p.project_name=#{cipher.projectName}
+                 </if>
+                 <if test="cipher.moduleName !=null and cipher.moduleName !=''">
+                     and m.module_name=#{cipher.moduleName}
+                 </if>
+                 <if test="cipher.moduleCode !=null and cipher.moduleCode !=''">
+                     and c.module_code=#{cipher.moduleCode}
+                 </if>
+                 <if test="cipher.status !=null and cipher.status !=''">
+                     and c.status=#{cipher.status}
+                 </if>
+             </if>
+
+         </where>
+         order by id desc limit #{offset},#{size}
+    </select>
+
+
+
+</mapper>

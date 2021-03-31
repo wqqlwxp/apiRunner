@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <context id="SqlTables" targetRuntime="MyBatis3">
+        <!-- 注释 -->
+        <commentGenerator >
+            <property name="suppressAllComments" value="true" /><!-- 是否取消注释 -->
+            <property name="suppressDate" value="true" /><!-- 是否生成注释代时间戳 -->
+        </commentGenerator>
+
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                connectionURL="jdbc:mysql://xxxxxx:3306/api_runner"
+                        userId="xxxx" password="xxxx!@#"  >
+            <property name="nullCatalogMeansCurrent" value="true"/>
+        </jdbcConnection>
+
+        <!-- 类型转换 -->
+        <javaTypeResolver>
+            <!-- 是否使用bigDecimal， false可自动转化以下类型（Long, Integer, Short, etc.） -->
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <!-- 生成实体类地址 -->
+        <!-- targetProject:生成Entity类的路径 -->
+        <javaModelGenerator targetPackage="com.runner.server.dao.entity.po"
+                            targetProject="./server/src/main/java" >
+            <property name="enableSubPackages" value="false"/>
+            <!-- 从数据库返回的值被清理前后的空格  -->
+            <property name="trimStrings" value="false"/>
+        </javaModelGenerator>
+
+
+        <!-- 数据库表名字和我们的entity类对应的映射指定 -->
+        <table tableName="zk_service" domainObjectName="zkService" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" ><property name="useActualColumnNames" value="false" /></table>
+
+    </context>
+</generatorConfiguration>

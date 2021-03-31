@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.runner.server.dao.mapper.MailMapper">
+    <select id="queryAll" resultType="com.runner.server.dao.entity.po.Mail">
+        select * from mail
+    </select>
+
+
+    <select id="queryAllCount" resultType="int">
+        select count(*) from mail
+    </select>
+
+
+
+
+
+    <select id="queryCountByExample" resultType="int" >
+        select count(m.id) from mail m
+        left join project p on p.project_code=m.project_code
+        <where>
+            1=1
+            <if test="mail !=null ">
+                <if test="mail.projectName !=null and mail.projectName!=''">
+                    and p.project_name=#{mail.projectName}
+                </if>
+            </if>
+        </where>
+    </select>
+
+    <select id="queryPageData" resultType="com.runner.server.dao.entity.po.Mail" >
+        select m.id,m.project_code,p.project_name,m.mail_title,m.mail_receive,m.`status`,m.operater,m.create_time from mail m
+        left join project p on p.project_code=m.project_code
+        <where>
+            1=1
+            <if test="mail !=null ">
+                <if test="mail.projectName !=null and mail.projectName!=''">
+                    and p.project_name=#{mail.projectName}
+                </if>
+                <if test="mail.projectCode !=null and mail.projectCode!=''">
+                    and m.project_code=#{mail.projectCode}
+                </if>
+                <if test="mail.status !=null and mail.status!=''">
+                    and m.status=#{mail.status}
+                </if>
+            </if>
+        </where>
+        order by id desc limit #{offset},#{size}
+    </select>
+
+
+
+</mapper>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.runner.server.dao.mapper.EnvMachineMapper">
+    <select id="queryAll" resultType="com.runner.server.dao.entity.po.EnvMachine">
+        select * from env_machine
+    </select>
+
+
+    <select id="queryAllCount" resultType="int">
+        select count(*) from env_machine
+    </select>
+
+
+
+
+    <select id="queryCountByExample" resultType="int" >
+        select  count(env.id) from env_machine  env
+        LEFT JOIN  project p on p.project_code=env.project_code
+        <where>
+            1=1
+            <if test="envMachine !=null ">
+                <if test="envMachine.projectName !=null and envMachine.projectName !=''">
+                    and p.project_name=#{envMachine.projectName}
+                </if>
+            </if>
+        </where>
+    </select>
+
+
+
+
+    <select id="queryByCode" resultType="com.runner.server.dao.entity.po.EnvMachine">
+        select * from env_machine
+        <where >
+            1=1
+            <if test="projectCode!=null and projectCode!=''">
+                and project_code=#{projectCode}
+            </if>
+        </where>
+    </select>
+
+
+    <select id="queryExistByCode" resultType="com.runner.server.dao.entity.po.EnvMachine">
+        select * from env_machine where project_code=#{projectCode} and env_code=#{envCode} ;
+    </select>
+
+
+
+
+
+
+    <select id="queryPageData" resultType="com.runner.server.dao.entity.po.EnvMachine" >
+        select  env.id,env.project_code,env.operater,p.project_name,env.env_name,env.env_code,env.ip,env.user_name,env.user_pwd,env.`status`,env.create_time,env.port
+        from env_machine  env
+        LEFT JOIN  project p on p.project_code=env.project_code
+        <where>
+            1=1
+            <if test="envMachine !=null ">
+                <if test="envMachine.projectName !=null and envMachine.projectName !=''">
+                    and p.project_name=#{envMachine.projectName}
+                </if>
+
+                <if test="envMachine.projectCode !=null and envMachine.projectCode !=''">
+                    and env.project_code=#{envMachine.projectCode}
+                </if>
+                <if test="envMachine.envCode !=null and envMachine.envCode !=''">
+                    and env.env_code=#{envMachine.envCode}
+                </if>
+            </if>
+        </where>
+        order by id desc limit #{offset},#{size}
+    </select>
+
+
+
+</mapper>

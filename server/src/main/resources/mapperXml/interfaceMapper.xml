@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.runner.server.dao.mapper.InterfaceMapper">
+    <select id="queryAll" resultType="com.runner.server.dao.entity.po.Interface">
+        select * from interface
+    </select>
+
+    <select id="queryAllCount" resultType="int">
+        select count(*) from interface
+    </select>
+
+
+
+    <select id="queryExistByCode" resultType="int">
+        select count(1) from interface where project_code=#{projectCode} and interface_url=#{interfaceUrl}
+    </select>
+
+
+
+    <select id="queryByCode" resultType="com.runner.server.dao.entity.po.Interface">
+        select * from interface
+        <where >
+            1=1
+            <if test="projectCode!=null and projectCode!=''">
+                and project_code=#{projectCode}
+            </if>
+            <if test="moduleCode!=null and moduleCode!=''">
+                and module_code=#{moduleCode}
+            </if>
+        </where>
+    </select>
+
+
+
+
+
+
+    <select id="queryCountByExample" resultType="int" >
+        select count(face.id) from interface  face
+        LEFT JOIN  project p on p.project_code=face.project_code
+        LEFT JOIN  project_module m on m.module_code=face.module_code  and m.project_code=face.project_code
+        <where>
+            1=1
+            <if test="interfaceData !=null ">
+                <if test="interfaceData.projectName !=null and interfaceData.projectName !=''">
+                    and p.project_name=#{interfaceData.projectName}
+                </if>
+                <if test="interfaceData.moduleName !=null and interfaceData.moduleName !=''">
+                    and m.module_name=#{interfaceData.moduleName}
+                </if>
+            </if>
+        </where>
+    </select>
+
+
+
+    <select id="queryPageData" resultType="com.runner.server.dao.entity.po.Interface" >
+        select  face.id,face.project_code,face.module_code,face.interface_url,face.operater,face.interface_type,face.request_type,face.interface_desc,face.`status`,face.create_time,p.project_name,m.module_name
+        from interface  face
+        LEFT JOIN  project p on p.project_code=face.project_code
+        LEFT JOIN  project_module m on m.module_code=face.module_code  and m.project_code=face.project_code
+         <where>
+            1=1
+            <if test="interfaceData !=null ">
+                <if test="interfaceData.projectName !=null and interfaceData.projectName !=''">
+                    and p.project_name=#{interfaceData.projectName}
+                </if>
+                <if test="interfaceData.moduleName !=null and interfaceData.moduleName !=''">
+                    and m.module_name=#{interfaceData.moduleName}
+                </if>
+                <if test="interfaceData.interfaceUrl !=null and interfaceData.interfaceUrl !=''">
+                    and face.interface_url=#{interfaceData.interfaceUrl}
+                </if>
+                <if test="interfaceData.moduleCode !=null and interfaceData.moduleCode !=''">
+                    and m.module_code=#{interfaceData.moduleCode}
+                </if>
+                <if test="interfaceData.projectCode !=null and interfaceData.projectCode !=''">
+                    and p.project_code=#{interfaceData.projectCode}
+                </if>
+            </if>
+
+        </where>
+        order by face.id desc limit #{offset},#{size}
+    </select>
+
+
+
+</mapper>
