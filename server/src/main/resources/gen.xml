@@ -11,8 +11,8 @@
         </commentGenerator>
 
         <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
-                connectionURL="jdbc:mysql://xxxxxx:3306/api_runner"
-                        userId="xxxx" password="xxxx!@#"  >
+                connectionURL="jdbc:mysql://xx.xx.xx.xx:3306/api_runner"
+                        userId="xxxx" password="xxxxx!@#"  >
             <property name="nullCatalogMeansCurrent" value="true"/>
         </jdbcConnection>
 
@@ -33,7 +33,7 @@
 
 
         <!-- 数据库表名字和我们的entity类对应的映射指定 -->
-        <table tableName="zk_service" domainObjectName="zkService" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" ><property name="useActualColumnNames" value="false" /></table>
+        <table tableName="database_config" domainObjectName="databaseConfig" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" ><property name="useActualColumnNames" value="false" /></table>
 
     </context>
 </generatorConfiguration>

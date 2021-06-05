@@ -15,6 +15,7 @@ public class ReqCaseData {
     private List<ReqHeader> reqHeaders;  //接口请求header
     private ReqBody reqBodys;  //接口请求消息体
     private ReqVerif reqVerifs;  //接口参数校验
+    private ReqDataVerif reqDataVerifs; //数据库验证
     private EnvMachine envMachine;  //用例执行环境
     private String projectCode;   //用例所属项目
     private String moduleCode;  //用例所属模块
@@ -116,5 +117,14 @@ public class ReqCaseData {
 
     public void setZkMethod(String zkMethod) {
         this.zkMethod = zkMethod;
+    }
+
+
+    public ReqDataVerif getReqDataVerifs() {
+        return reqDataVerifs;
+    }
+
+    public void setReqDataVerifs(ReqDataVerif reqDataVerifs) {
+        this.reqDataVerifs = reqDataVerifs;
     }
 }

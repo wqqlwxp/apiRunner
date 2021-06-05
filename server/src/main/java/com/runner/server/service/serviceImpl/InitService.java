@@ -40,6 +40,10 @@ public class InitService implements CommandLineRunner {
     @Resource
     private ZkService zkService;
 
+
+    @Resource
+    private DataBaseService dataBaseService;
+
     /**
      * @description 初始化数据
      * @author 星空梦语

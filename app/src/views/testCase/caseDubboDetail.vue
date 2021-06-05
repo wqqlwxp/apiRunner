@@ -138,6 +138,52 @@
                                 </el-table>
 
                             </el-tab-pane>
+
+
+                            <el-tab-pane label="数据库校验" name="databaseVerif">
+                                <div class="left">
+                                    <el-radio-group v-model="obj.reqDataVerifs.type" >
+                                        <el-radio label="none">不校验</el-radio>
+                                        <el-radio  label="sql">sql校验</el-radio>
+                                    </el-radio-group>
+                                </div>
+                                <el-table v-show="obj.reqDataVerifs.type=='sql'" :data="obj.reqDataVerifs.sqlData"  >
+                                    <el-table-column v-for="(item,key) in tableDataVerifTitle" :key="key" :prop="item.prop" align="center" :label="item.label" :width="item.width" >
+                                        <template  slot-scope="{row}" >
+                                            <template  v-if="item.prop!='verifType'">
+                                                <el-input v-model="row[item.prop]" ></el-input>
+                                            </template>
+
+                                            <template    v-if="item.prop=='verifType'">
+                                                <el-select  v-model="row[item.prop]"  placeholder="请选择" >
+                                                    <el-option label="大于" value=">"> </el-option>
+                                                    <el-option label="小于" value="<"> </el-option>
+                                                    <el-option label="等于" value="="> </el-option>
+                                                    <el-option label="包含" value="()"> </el-option>
+                                                </el-select>
+                                            </template>
+                                        </template>
+
+                                    </el-table-column>
+
+                                    <el-table-column   align="center"  width="80">
+                                        <template  slot-scope="{row,$index}">
+                                            <el-button icon="el-icon-delete" circle  @click="removeVerif($index,obj.reqDataVerifs.sqlData)"></el-button>
+                                        </template>
+                                    </el-table-column>
+                                    <el-table-column   align="center" width="80">
+                                        <template  slot-scope="{row,$index}">
+                                            <el-button v-if="$index==obj.reqDataVerifs.sqlData.length-1" icon="el-icon-plus" circle @click="addVerif($index,obj.reqDataVerifs.sqlData)"></el-button>
+                                        </template>
+                                    </el-table-column>
+                                </el-table>
+
+                            </el-tab-pane>
+
+
+
+
+
                         </el-tabs>
                     </div>
 
@@ -181,6 +227,8 @@
                 tableParamInitData: templateData.tableParamInitData,
                 tableVerifTitle: templateData.tableVerifTitle,
                 tableVerifInitData: templateData.tableVerifInitData,
+                tableDataVerifTitle: templateData.tableDataVerifTitle,
+                tableDataVerifInitData: templateData.tableDataVerifInitData,
                 allData:[],
                 preData:[],
                 caseData: [],

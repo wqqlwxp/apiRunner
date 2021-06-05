@@ -17,4 +17,4 @@ nexus-address: http://xxxxxxxxx:8081/repository/
 nexus-target: server/src/main/resources/lib/
 
 #本地是否开启redis和zk代理
-open_ssh: true
+open_ssh: false

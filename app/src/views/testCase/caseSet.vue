@@ -93,10 +93,10 @@
                 </el-table-column>
                 <el-table-column  fixed="right" align="center" label="操作" width="250">
                     <template  slot-scope="{row,$index}">
-                        <el-button  v-per="'case_edit'"  size="small"  type="primary" icon="el-icon-edit" @click="change(row,$index,true)" circle></el-button>
-                        <el-button v-per="'case_save'"  size="small" type="success" icon="el-icon-check" @click="save(row,$index)" circle></el-button>
-                        <el-button   size="small" v-if="!editable[$index]" type="primary" icon="el-icon-view" circle @click="goToDetail(row)"></el-button>
-                        <el-button v-per="'case_del'"  size="small" type="danger" icon="el-icon-delete" @click="remove(row)" circle></el-button>
+                        <i v-per="'case_edit'"  class="el-icon-edit i_pry"    @click="change(row,$index,true)" ></i>
+                        <i v-per="'case_save'"  class="el-icon-check i_pry"     @click="save(row,$index)" ></i>
+                        <i  class="el-icon-view i_pry"    @click="goToDetail(row)" ></i>
+                        <i v-per="'case_del'"   class="el-icon-delete i_pry"     @click="remove(row)" ></i>
                     </template>
                 </el-table-column>
             </el-table>

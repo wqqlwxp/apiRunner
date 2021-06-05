@@ -169,7 +169,7 @@ public class AuthService {
             return  msgReponseObject;
         }
         user.setCreateTime(DateUtil.formatToDayByDate3(new Date()));
-
+        //测试平台登录
         String pwd=cipherService.encrypt("testPlateform","login",user.getUserPassword());
         user.setUserPassword(pwd);
         int flag=userMapper.insertSelective(user);

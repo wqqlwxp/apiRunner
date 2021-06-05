@@ -43,9 +43,9 @@
                 </el-table-column>
                 <el-table-column  fixed="right" align="center" label="操作" width="200">
                     <template  slot-scope="{row,$index}">
-                        <el-button  v-per="'project_edit' " size="small"  type="primary" icon="el-icon-edit" @click="change($index,true)" circle></el-button>
-                        <el-button  v-per="'project_save' "   size="small" type="success" icon="el-icon-check" @click="save(row,$index)" circle></el-button>
-                        <el-button  v-per="'project_del'"  size="small" type="danger" icon="el-icon-delete" @click="remove(row)" circle></el-button>
+                        <i v-per="'project_edit'"  class="el-icon-edit i_pry"     @click="change($index,true)" ></i>
+                        <i v-per="'project_save'"  class="el-icon-check i_pry"     @click="save(row,$index)" ></i>
+                        <i v-per="'project_del'"   class="el-icon-delete i_pry"     @click="remove(row)" ></i>
                     </template>
                 </el-table-column>
             </el-table>
@@ -207,5 +207,7 @@
         margin-left: 20px;
         margin-top: 30px;
     }
+
+
 
 </style>

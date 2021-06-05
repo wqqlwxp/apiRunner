@@ -21,6 +21,7 @@ import cipherSet from "@/views/testSet/cipherSet";
 import zkSet from "@/views/testSet/zkSet";
 import dubboServiceDetail from "@/views/testInterface/dubboServiceDetail";
 import caseDubboDetail from "@/views/testCase/caseDubboDetail";
+import databaseSet from "@/views/testSet/databaseSet";
 
 
 const routes=[
@@ -123,7 +124,13 @@ const routes=[
                 path: "/goCaseDubboDetail",
                 title:'dubbo用例明细',
                 component:caseDubboDetail
+            },
+            {
+                path: "/goDatabaseSet",
+                title:'数据库配置',
+                component:databaseSet
             }
+
         ]
     },
 

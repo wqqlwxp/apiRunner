@@ -89,6 +89,11 @@ let navMenu=[
                 path: "/goZookeeper",
                 icon:'el-icon-key',
                 title:'ZK配置',
+            },
+            {
+                path: "/goDatabaseSet",
+                icon:'el-icon-key',
+                title:'数据库配置',
             }
         ]
     },
@@ -158,20 +163,29 @@ let tableParamTitle=[{label:'参数名',prop:'key',width:'300',},{label:'参数�
 let tableParamInitData={"key":"","value":""};
 
 
+//用例明细-接口校验
 let tableVerifTitle=[{label:'json父节点',prop:'verifParentKey',width:'300',},{label:'校验json节点',prop:'verifKey',width:'300',},{label:'判断',prop:'verifType',width:'100',},{label:'预期结果',prop:'verifValue',width:'300',}];
 let tableVerifInitData={"verifParentKey":"","verifKey":"","verifType":"=","verifValue":""};
+
+
+//用例明细-数据库校验
+let tableDataVerifTitle=[{label:'查询sql',prop:'verifSql',width:'500',},{label:'校验sql字段',prop:'verifKey',width:'150',},{label:'判断',prop:'verifType',width:'100',},{label:'预期结果',prop:'verifValue',width:'300',}];
+let tableDataVerifInitData={"verifSql":"","verifKey":"","verifType":"=","verifValue":""};
+
 
 //测试数据
 let testData= [{"tabIndex":"header","interfaceData":{"id":8,"projectCode":"sso","moduleCode":"sso","interfaceUrl":"/test/comapny/queryCompanyNameBycode","interfaceType":"http","requestType":"post","interfaceDesc":"查询公司名称接口","status":"0"},"reqBody":{"jsonData":"","data":[{"key":"header","value":"1111"}],"type":"formData"},"reqHeaderList":[{"key":"header","value":"111"}],"verifData":{"jsonData":[{"verifParentKey":"","verifKey":"","verifValue":""}],"data":"json数据拉啊啊啊啊啊","type":"all"}},{"tabIndex":"header","interfaceData":{"id":9,"projectCode":"sso","moduleCode":"sso","interfaceUrl":"/test/comapny/queryCompanyNameBycode","interfaceType":"http","requestType":"post","interfaceDesc":"查询公司名称接口","status":"0"},"reqBody":{"jsonData":"ererer","data":[{"key":"","value":""}],"type":"json"},"reqHeaderList":[{"key":"header","value":"111"}],"verifData":{"jsonData":[{"verifParentKey":"header","verifKey":"111","verifValue":"111"}],"data":"","type":"json"}}];
 
 //用例接口新增模板数据
-let tableCaseInterfaceAddData={"tabIndex":"header","reqInterface":{"id":"","projectCode":"","moduleCode":"","interfaceUrl":"","interfaceType":"","requestType":"","interfaceDesc":"","status":""},"reqBodys":{"jsonData":"","data":[{"key":"","value":"","isEncrypt":true}],"type":"none"},"reqHeaders":[{"key":"","value":""}],"reqVerifs":{"jsonData":[{"verifParentKey":"","verifKey":"","verifType":"=","verifValue":""}],"data":"","type":"none"}};
-let tableDubboCaseInterfaceAddData={"tabIndex":"param","zkId":"","zkApp":"","zkInterface":"","zkMethod":"","reqInterface":{"id":"","projectCode":"","moduleCode":"","interfaceUrl":"","interfaceType":"","requestType":"","interfaceDesc":"","status":""},"reqBodys":{"jsonData":"","type":"json"},"reqVerifs":{"jsonData":[{"verifParentKey":"","verifKey":"","verifType":"=","verifValue":""}],"data":"","type":"none"}};
+let tableCaseInterfaceAddData={"tabIndex":"header","reqInterface":{"id":"","projectCode":"","moduleCode":"","interfaceUrl":"","interfaceType":"","requestType":"","interfaceDesc":"","status":""},"reqBodys":{"jsonData":"","data":[{"key":"","value":"","isEncrypt":true}],"type":"none"},"reqHeaders":[{"key":"","value":""}],"reqVerifs":{"jsonData":[{"verifParentKey":"","verifKey":"","verifType":"=","verifValue":""}],"data":"","type":"none"},"reqDataVerifs":{"sqlData":[{"verifSql":"","verifKey":"","verifType":"=","verifValue":""}],"type":"none"}}
+
+let tableDubboCaseInterfaceAddData={"tabIndex":"param","zkId":"","zkApp":"","zkInterface":"","zkMethod":"","reqInterface":{"id":"","projectCode":"","moduleCode":"","interfaceUrl":"","interfaceType":"","requestType":"","interfaceDesc":"","status":""},"reqBodys":{"jsonData":"","type":"json"},"reqVerifs":{"jsonData":[{"verifParentKey":"","verifKey":"","verifType":"=","verifValue":""}],"data":"","type":"none"},"reqDataVerifs":{"sqlData":[{"verifSql":"","verifKey":"","verifType":"=","verifValue":""}],"type":"none"}}
+
 
 //报告明细表头
 let tableReportDetailTitle=[{label:'执行项目',prop:'projectCode',width:'150',},{label:'执行模块',prop:'moduleCode',width:'150'},{label:'用例id',prop:'caseId',width:'150'},{label:'用例类型',prop:'type',width:'150'},{label:'调用类型',prop:'serviceType',width:'150'},{label:'测试计划id',prop:'planId',width:'150'},{label:'执行环境',prop:'testEnv',width:'150'},{label:'执行结果',prop:'result',width:'150'},{label:'用例执行接口',prop:'interfaceDesc',width:'150'},{label:'用例接口相应数据',prop:'responseData',width:'200'},{label:'用例校验数据',prop:'verifData',width:'200'},{label:'异常消息',prop:'msg',width:'200'},{label:'执行时间',prop:'createTime',width:'200'}];
 
-let tableVerifViewTitle=[{label:'校验结果',prop:'result',width:'150'},{label:'校验父节点',prop:'verifParentKey',width:'150',},{label:'校验节点',prop:'verifKey',width:'150'},{label:'判断符',prop:'verifType',width:'150'},{label:'预期结果',prop:'verifValue',width:'150'},{label:'实际结果',prop:'actualValue',width:'150'}];
+let tableVerifViewTitle=[{label:'校验结果',prop:'result',width:'150'},{label:'校验父节点',prop:'verifParentKey',width:'150',},{label:'校验节点',prop:'verifKey',width:'150'},{label:'校验方式',prop:'verifWay',width:'150'},{label:'判断符',prop:'verifType',width:'150'},{label:'预期结果',prop:'verifValue',width:'150'},{label:'实际结果',prop:'actualValue',width:'150'}];
 
 
 
@@ -186,7 +200,7 @@ let tableScheduleTaskInitData={"projectCode":"","cron":"","testEnv":"","status":
 let tableUsersTitle=[{label:'用户账号',prop:'userAccount',width:'200',},{label:'用户密码',prop:'userPassword',width:'300',},{label:'用户昵称',prop:'nickName',width:'200',},{label:'权限',prop:'permission',width:'150'},{label:'状态',prop:'status',width:'150'},{label:'最后操作人',prop:'operater',width:'150'},{label:'创建时间',prop:'createTime',width:'150'}];
 let tableUsersInitData={"userAccount":"","userPassword":"","nickName":"","permission":"","status":"0","operater":"","createTime":""};
 
-let allPermission= [{label:'接口管理-接口编辑',key:'interface_edit'},{label:'接口管理-接口保存',key:'interface_save'},{label:'接口管理-接口删除',key:'interface_del'},{label:'用例管理-用例编辑',key:'case_edit'},{label:'用例管理-用例保存',key:'case_save'},{label:'用例管理-用例删除',key:'case_del'},{label:'用例管理-明细执行',key:'case_detail_run'},{label:'用例管理-明细保存',key:'case_detail_save'},{label:'计划管理-计划编辑',key:'plan_edit'},{label:'计划管理-计划保存',key:'plan_save'},{label:'计划管理-计划删除',key:'plan_del'},{label:'项目管理-项目编辑',key:'project_edit'},{label:'项目管理-项目保存',key:'project_save',},{label:'项目管理-项目删除',key:'project_del'},{label:'项目管理-模块编辑',key:'module_edit'},{label:'项目管理-模块保存',key:'module_save'},{label:'项目管理-模块删除',key:'module_del'},{label:'配置管理-环境编辑',key:'env_edit'},{label:'配置管理-环境保存',key:'env_save'},{label:'配置管理-环境删除',key:'env_del'},{label:'定时管理-定时编辑',key:'timer_edit'},{label:'定时管理-定时保存',key:'timer_save'},{label:'定时管理-定时删除',key:'timer_del'},{label:'权限管理-用户编辑',key:'user_edit'},{label:'权限管理-用户保存',key:'user_save'},{label:'权限管理-用户删除',key:'user_del'},{label:'配置管理-zk保存',key:'zk_save'},{label:'配置管理-zk删除',key:'zk_del'},{label:'配置管理-zk刷新',key:'zk_refresh'},{label:'配置管理-zk服务创建',key:'zk_createApp'}];
+let allPermission= [{label:'接口管理-接口编辑',key:'interface_edit'},{label:'接口管理-接口保存',key:'interface_save'},{label:'接口管理-接口删除',key:'interface_del'},{label:'用例管理-用例编辑',key:'case_edit'},{label:'用例管理-用例保存',key:'case_save'},{label:'用例管理-用例删除',key:'case_del'},{label:'用例管理-明细执行',key:'case_detail_run'},{label:'用例管理-明细保存',key:'case_detail_save'},{label:'计划管理-计划编辑',key:'plan_edit'},{label:'计划管理-计划保存',key:'plan_save'},{label:'计划管理-计划删除',key:'plan_del'},{label:'项目管理-项目编辑',key:'project_edit'},{label:'项目管理-项目保存',key:'project_save',},{label:'项目管理-项目删除',key:'project_del'},{label:'项目管理-模块编辑',key:'module_edit'},{label:'项目管理-模块保存',key:'module_save'},{label:'项目管理-模块删除',key:'module_del'},{label:'配置管理-环境编辑',key:'env_edit'},{label:'配置管理-环境保存',key:'env_save'},{label:'配置管理-环境删除',key:'env_del'},{label:'定时管理-定时编辑',key:'timer_edit'},{label:'定时管理-定时保存',key:'timer_save'},{label:'定时管理-定时删除',key:'timer_del'},{label:'权限管理-用户编辑',key:'user_edit'},{label:'权限管理-用户保存',key:'user_save'},{label:'权限管理-用户删除',key:'user_del'},{label:'配置管理-zk保存',key:'zk_save'},{label:'配置管理-zk删除',key:'zk_del'},{label:'配置管理-zk刷新',key:'zk_refresh'},{label:'配置管理-zk服务创建',key:'zk_createApp'},{label:'配置管理-密钥编辑',key:'cipher_edit'},{label:'配置管理-密钥保存',key:'cipher_save'},{label:'配置管理-密钥删除',key:'cipher_del'},{label:'配置管理-邮件编辑',key:'mail_edit'},{label:'配置管理-邮件保存',key:'mail_save'},{label:'配置管理-邮件删除',key:'mail_del'}];
 
 
 let tableMailTitle=[{label:'邮件项目维度',prop:'projectCode',width:'200',},{label:'邮件标题',prop:'mailTitle',width:'200',},{label:'收件人(,分割)',prop:'mailReceive',width:'200',},{label:'状态',prop:'status',width:'150'},{label:'最后操作人',prop:'operater',width:'150'},{label:'创建时间',prop:'createTime',width:'150'}];
@@ -204,10 +218,17 @@ let tableZKInitData={"zkAlias":"","zkIp":"","zkPassword":"","createTime":""};
 let tableZKDataTitle=[{label:'zk环境',prop:'zkAlias',width:'150',},{label:'应用',prop:'appName',width:'200',},{label:'接口',prop:'interfaceName',width:'500',},{label:'方法',prop:'methodName',width:'350'},{label:'版本',prop:'version',width:'150'}];
 
 
+
+let tableDatabaseTitle=[{label:'所属项目',prop:'projectCode',width:'150',},{label:'所属模块',prop:'moduleCode',width:'150',},{label:'数据库地址',prop:'connectionAddress',width:'450',},{label:'连接用户',prop:'connectionUser',width:'150'},{label:'连接密码',prop:'connectionPwd',width:'150'},{label:'最后操作人',prop:'operater',width:'200'},{label:'创建时间',prop:'createTime',width:'200'}];
+let tableDatabaseInitData={"projectCode":"","moduleCode":"","connectionAddress":"","connectionUser":"","connectionPwd":"","createTime":""};
+
+
+
 export default{
     navMenu,tableProjectTitle,tableProjectInitData,tableModuleTitle,tableModuleInitData,tableInterfaceTitle,tableInterfaceInitData,
     tableEnvTitle,tableEnvInitData,tableCaseTitle,tableCaseInitData,tableHeaderTitle,tableHeaderInitData,tableParamTitle,tableParamInitData,
     tableVerifTitle,tableVerifInitData,testData,tableCaseInterfaceAddData,tableReportDetailTitle,tableVerifViewTitle,tableTestPlanTitle,tableTestPlanInitData,
     tableScheduleTaskTitle,tableScheduleTaskInitData,tableUsersTitle,tableUsersInitData,allPermission,tableMailTitle,tableMailInitData,
-    tableCipherTitle,tableCipherInitData,tableZKTitle,tableZKInitData,tableZKDataTitle,tableDubboCaseInterfaceAddData
+    tableCipherTitle,tableCipherInitData,tableZKTitle,tableZKInitData,tableZKDataTitle,tableDubboCaseInterfaceAddData,tableDatabaseTitle,
+    tableDatabaseInitData,tableDataVerifTitle,tableDataVerifInitData
 }

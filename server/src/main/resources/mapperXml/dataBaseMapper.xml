@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.runner.server.dao.mapper.DataBaseMapper">
+    <select id="queryAll" resultType="com.runner.server.dao.entity.po.DatabaseConfig">
+        select * from database_config
+    </select>
+
+
+    <select id="queryAllCount" resultType="int">
+        select count(*) from database_config
+    </select>
+
+
+
+
+
+    <select id="queryCountByExample" resultType="int" >
+        select count(d.id) from database_config d
+        left join project p on p.project_code=d.project_code
+        left join project_module m on m.module_code=d.module_code and m.project_code=d.project_code
+
+        <where>
+            1=1
+            <if test="dataBaseConfig !=null ">
+                <if test="dataBaseConfig.projectName !=null and dataBaseConfig.projectName!=''">
+                    and p.project_name=#{dataBaseConfig.projectName}
+                </if>
+                <if test="dataBaseConfig.moduleName !=null and dataBaseConfig.moduleName !=''">
+                    and m.module_name=#{cipher.moduleName}
+                </if>
+            </if>
+        </where>
+    </select>
+
+    <select id="queryPageData" resultType="com.runner.server.dao.entity.po.DatabaseConfig" >
+        select d.id,d.project_code,d.module_code,d.connection_address,d.connection_user,d.connection_pwd,d.`status`,d.operater,d.create_time from database_config d
+        left join project p on p.project_code=d.project_code
+        left join project_module m on m.module_code=d.module_code and m.project_code=d.project_code
+
+        <where>
+            1=1
+            <if test="dataBaseConfig !=null ">
+                <if test="dataBaseConfig.projectName !=null and dataBaseConfig.projectName!=''">
+                    and p.project_name=#{dataBaseConfig.projectName}
+                </if>
+                <if test="dataBaseConfig.moduleName !=null and dataBaseConfig.moduleName!=''">
+                    and m.module_name=#{dataBaseConfig.moduleName}
+                </if>
+                <if test="dataBaseConfig.moduleCode !=null and dataBaseConfig.moduleCode!=''">
+                    and d.module_code=#{dataBaseConfig.moduleCode}
+                </if>
+                <if test="dataBaseConfig.projectCode !=null and dataBaseConfig.projectCode!=''">
+                    and d.project_code=#{dataBaseConfig.projectCode}
+                </if>
+                <if test="dataBaseConfig.status !=null and dataBaseConfig.status!=''">
+                    and d.status=#{dataBaseConfig.status}
+                </if>
+            </if>
+        </where>
+        order by id desc limit #{offset},#{size}
+    </select>
+
+
+
+</mapper>

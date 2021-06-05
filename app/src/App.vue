@@ -80,6 +80,16 @@
     line-height: 320px;
   }
 
+  .i_pry{
+    font-size:1.5em;
+    margin:0 10px;
+    color:#409EFF;
+  }
+  .i_pry:hover{
+    color:blue;
+    cursor: pointer;
+  }
+
 
 
 </style>

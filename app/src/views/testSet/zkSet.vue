@@ -37,7 +37,7 @@
                 </el-table-column>
                 <el-table-column  fixed="right" align="center" label="操作"  style="width:400px" >
                     <template  slot-scope="{row,$index}">
-                        <el-button  v-per="'zk_save'"   slot="reference" size="small" type="success" icon="el-icon-check" @click="save(row,$index)" circle></el-button>
+                        <i v-per="'zk_save'"   slot="reference" class="el-icon-check i_pry"     @click="save(row,$index)" ></i>
                         <el-popover placement="left" width="400" v-model="appvisible[$index]" trigger="manual">
                             <el-form ref="form" :model="form" label-width="100px">
                                 <el-form-item label="应用名称">
@@ -53,10 +53,10 @@
                                     <el-button type="success" size="small" @click="createApp(row.zkIp,row.id,$index)"  >立即创建</el-button>
                                 </el-form-item>
                             </el-form>
-                            <el-button  v-per="'zk_createApp'"   size="small" type="primary" slot="reference"  @click="openApp(row.zkIp,$index)" round>创建服务</el-button>
+                            <i v-per="'zk_createApp'"  slot="reference"  class="el-icon-plus i_pry"   @click="openApp(row.zkIp,$index)" ></i>
                         </el-popover>
-                        <el-button v-per="'zk_refresh'"  size="small" type="warning"  @click="refresh(row)" round>刷新ZK</el-button>
-                        <el-button v-per="'zk_del'"   size="small" type="danger" icon="el-icon-delete" @click="remove(row)" circle></el-button>
+                        <i v-per="'zk_refresh'"   class="el-icon-refresh-right i_pry"     @click="refresh(row)" ></i>
+                        <i v-per="'zk_del'"   class="el-icon-delete i_pry"     @click="remove(row)" ></i>
                     </template>
                 </el-table-column>
             </el-table>

@@ -16,6 +16,10 @@ public class VerifData {
 
     private String msg;
 
+    private String verifWay;  //校验方式，接口校验 ，数据库校验
+
+    private String verifSql; //数据库校验时执行SQL
+
 
     public String getVerifType() {
         return verifType;
@@ -71,5 +75,23 @@ public class VerifData {
 
     public void setMsg(String msg) {
         this.msg = msg;
+    }
+
+
+
+    public String getVerifSql() {
+        return verifSql;
+    }
+
+    public void setVerifSql(String verifSql) {
+        this.verifSql = verifSql;
+    }
+
+    public String getVerifWay() {
+        return verifWay;
+    }
+
+    public void setVerifWay(String verifWay) {
+        this.verifWay = verifWay;
     }
 }

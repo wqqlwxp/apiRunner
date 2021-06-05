@@ -23,15 +23,15 @@ public class SSHChannelUtil {
             try {
                 JSch jsch = new JSch();
                 //登陆跳板机
-                seeesionZk = jsch.getSession("xxxx", "xxxx", 22);
-                seeesionZk.setPassword("xxxx");
+                seeesionZk = jsch.getSession("xxxx", "xx.xx.xx.xx", 22);
+                seeesionZk.setPassword("xxxxx");
                 seeesionZk.setConfig("StrictHostKeyChecking", "no");
                 seeesionZk.connect();
                 //建立通道
                 channelZk = seeesionZk.openChannel("session");
                 channelZk.connect();
                 //通过ssh连接到远程机器
-                seeesionZk.setPortForwardingL("127.0.0.1",2181, "xxxx", 2181);
+                seeesionZk.setPortForwardingL("127.0.0.1",2181, "xx.xx.xx.xx", 2181);
                 LogUtil.info("ssh跳板机连接zk成功.......->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
             } catch (Exception e) {
                 e.printStackTrace();
@@ -42,7 +42,7 @@ public class SSHChannelUtil {
             try {
                 JSch jsch = new JSch();
                 //登陆跳板机
-                sessionRedis = jsch.getSession("xxx", "xxx", 22);
+                sessionRedis = jsch.getSession("xxxx", "xx.xx.xx.xx", 22);
                 sessionRedis.setPassword("xxx");
                 sessionRedis.setConfig("StrictHostKeyChecking", "no");
                 sessionRedis.connect();
@@ -50,7 +50,7 @@ public class SSHChannelUtil {
                 channelRedis = sessionRedis.openChannel("session");
                 channelRedis.connect();
                 //通过ssh连接到远程机器
-                sessionRedis.setPortForwardingL("127.0.0.1",6379, "xxxx", 6379);
+                sessionRedis.setPortForwardingL("127.0.0.1",6379, "127.0.0.1", 6379);
                 LogUtil.info("ssh跳板机连接redis成功.......->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
             } catch (Exception e) {
                 e.printStackTrace();

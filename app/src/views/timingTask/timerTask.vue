@@ -54,9 +54,9 @@
 
                 <el-table-column  fixed="right" align="center" label="操作" >
                     <template  slot-scope="{row,$index}">
-                        <el-button v-per="'timer_edit'"  size="small"  type="primary" icon="el-icon-edit" @click="change(row,$index,true)" circle></el-button>
-                        <el-button v-per="'timer_save'" size="small" type="success" icon="el-icon-check" @click="save(row,$index)" circle></el-button>
-                        <el-button v-per="'timer_del'"  size="small" type="danger" icon="el-icon-delete" @click="remove(row)" circle></el-button>
+                        <i v-per="'timer_edit'"  class="el-icon-edit i_pry"    @click="change(row,$index,true)" ></i>
+                        <i v-per="'timer_save'"  class="el-icon-check i_pry"     @click="save(row,$index)" ></i>
+                        <i v-per="'timer_del'"   class="el-icon-delete i_pry"     @click="remove(row)" ></i>
                     </template>
                 </el-table-column>
             </el-table>

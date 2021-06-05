@@ -3,14 +3,12 @@ package com.runner.server.service.serviceImpl;
 import com.alibaba.dubbo.config.ReferenceConfig;
 import com.alibaba.dubbo.rpc.service.GenericService;
 import com.alibaba.fastjson.JSONArray;
+import com.runner.server.controller.DataBaseConfigController;
 import com.runner.server.dao.entity.po.*;
-import com.runner.server.dao.mapper.ZkDataMapper;
-import com.runner.server.dao.mapper.ZkMapper;
+import com.runner.server.dao.mapper.*;
 import com.runner.server.service.utils.*;
 import com.alibaba.fastjson.JSON;
 import com.runner.server.dao.entity.bo.*;
-import com.runner.server.dao.mapper.ReportMapper;
-import com.runner.server.dao.mapper.CaseMapper;
 import com.sun.corba.se.spi.ior.ObjectKey;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
@@ -38,6 +36,9 @@ public class CaseService {
     private ZkDataMapper zkDataMapper;
 
     @Resource
+    private DataBaseMapper dataBaseMapper;
+
+    @Resource
     private EnvMachineService envMachineService;
 
     @Resource
@@ -45,6 +46,9 @@ public class CaseService {
 
     @Resource
     private CipherService cipherService;
+
+    @Resource
+    private DataBaseService dataBaseService;
 
 
 
@@ -262,7 +266,7 @@ public class CaseService {
                     }
 
                 }catch (Exception e){
-                    map.put(zkData.getMethodName(),"方法调用异常,请先确认与服务提供者网络访问是否正常，异常原因："+JSON.toJSONString(e.getMessage()));
+                    map.put(zkData.getMethodName(),"方法调用异常,请先确认服务部署机器与远程服务提供者网络连接是否正常，异常原因："+JSON.toJSONString(e.getMessage()));
                     e.printStackTrace();
                 }
             }else{
@@ -538,6 +542,7 @@ public class CaseService {
             try{
                 String text=JsonUtil.jsonPathRead(response,path);
                 VerifData checkVerif=checkData(verifData,text);
+                checkVerif.setVerifWay("接口校验");
                 verifDataList1.add(checkVerif);
                 if(!checkVerif.isResult()){
                     isSuccess=false;
@@ -553,8 +558,37 @@ public class CaseService {
             verifData.setVerifType("=");
             verifData.setVerifValue(reqCaseData.getReqVerifs().getData());
             VerifData checkVerif=checkData(verifData,response);
+            checkVerif.setVerifWay("接口校验");
             verifDataList1.add(checkVerif);
         }
+
+
+
+        //数据库校验
+        DatabaseConfig databaseConfig=new DatabaseConfig();
+        databaseConfig.setProjectCode(reqRequest.getProjectCode());
+        databaseConfig.setModuleCode(reqRequest.getModuleCode());
+        databaseConfig= dataBaseMapper.queryPageData(0,10,databaseConfig).get(0);
+        List<VerifData> verifDataBaseList=reqCaseData.getReqDataVerifs().getSqlData();
+        if(!reqCaseData.getReqDataVerifs().getType().equals("none")){
+            for (VerifData verifData : verifDataBaseList) {
+                if(StringUtils.isBlank(verifData.getVerifSql())){
+                    LogUtil.info("数据库校验sql为空，校验跳过");
+                    continue;
+                }
+                HashMap<String, Object> map=dataBaseService.executeQuery(verifData.getVerifSql(),databaseConfig.getConnectionAddress(),databaseConfig.getConnectionUser(),
+                        databaseConfig.getConnectionPwd());
+                String data=dataBaseService.getFieldValue(map,verifData.getVerifKey());
+                VerifData checkVerif=checkData(verifData,data);
+                checkVerif.setVerifWay("数据库校验");
+                if(!checkVerif.isResult()){
+                    isSuccess=false;
+                }
+                verifDataList1.add(checkVerif);
+            }
+        }
+
+
         caseLog.setVerifData(JSON.toJSONString(verifDataList1));
         caseLog.setResult(String.valueOf(isSuccess));
         caseLog.setServiceType(serviceType);

@@ -273,4 +273,29 @@ CREATE TABLE `zk_data` (
   UNIQUE KEY `idx_app_name` (`zk_id`,`interface_name`,`method_name`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=263768 DEFAULT CHARSET=utf8;
 
+
+
+
+-- ----------------------------
+-- Table structure for database_config
+-- ----------------------------
+DROP TABLE IF EXISTS `database_config`;
+CREATE TABLE `database_config` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `project_code` varchar(50) NOT NULL,
+  `module_code` varchar(50) NOT NULL,
+  `connection_address` varchar(255) NOT NULL,
+  `connection_user` varchar(255) NOT NULL,
+  `connection_pwd` varchar(255) NOT NULL,
+  `status` varchar(5) NOT NULL DEFAULT '0',
+  `operater` varchar(50) DEFAULT NULL,
+  `create_time` varchar(50) DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+
+
+
+
 SET FOREIGN_KEY_CHECKS = 1;
